@@ -1,7 +1,7 @@
 #!/bin/sh
 export DATE=`date +%Y%m%d-%H%M-UTC`
 
-echo "IP DETAILS" >> $DATE-Capacity-Tulsa.csv
+echo "IP DETAILS" >> $DATE-Capacity-EUCA.csv
 
 export totalip=`euca-describe-addresses verbose --region=admin@localhost | wc -l`
 export ipused=`euca-describe-addresses verbose --region=admin@localhost| grep i- | wc -l`
@@ -9,15 +9,15 @@ export ipunused=`euca-describe-addresses verbose --region=admin@localhost | grep
 export reservedip=`euca-describe-addresses verbose --region=admin@localhost | grep -v 'i-'  | grep -v nobody | wc -l`
 
 
-echo "TOTAL_IP,USED_IP,IP_UNSED,RESERVED_IP" >> $DATE-Capacity-Tulsa.csv
-echo "$totalip,$ipused,$ipunused,$reservedip"  >> $DATE-Capacity-Tulsa.csv
+echo "TOTAL_IP,USED_IP,IP_UNSED,RESERVED_IP" >> $DATE-Capacity-EUCA.csv
+echo "$totalip,$ipused,$ipunused,$reservedip"  >> $DATE-Capacity-EUCA.csv
 
 
 
-export usedcorea=`cat /tmp/capacity/instance.all | grep us-tulsa-1a | awk '{print$6}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
-export usedcoreb=`cat /tmp/capacity/instance.all | grep us-tulsa-1b | awk '{print$6}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
-export usedcorec=`cat /tmp/capacity/instance.all | grep us-tulsa-1c | awk '{print$6}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
-export usedcored=`cat /tmp/capacity/instance.all | grep us-tulsa-1d | awk '{print$6}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
+export usedcorea=`cat /tmp/capacity/instance.all | grep us-EUCA-1a | awk '{print$6}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
+export usedcoreb=`cat /tmp/capacity/instance.all | grep us-EUCA-1b | awk '{print$6}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
+export usedcorec=`cat /tmp/capacity/instance.all | grep us-EUCA-1c | awk '{print$6}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
+export usedcored=`cat /tmp/capacity/instance.all | grep us-EUCA-1d | awk '{print$6}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
 
 export totalcorea=`cat /tmp/capacity/core.a`
 export totalcoreb=`cat /tmp/capacity/core.b`
@@ -35,10 +35,10 @@ let freecored=$totalcored-$usedcored
 
 
 
-export usedmema=`cat /tmp/capacity/instance.all | grep us-tulsa-1a | awk '{print$7}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
-export usedmemb=`cat /tmp/capacity/instance.all | grep us-tulsa-1b | awk '{print$7}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
-export usedmemc=`cat /tmp/capacity/instance.all | grep us-tulsa-1c | awk '{print$7}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
-export usedmemd=`cat /tmp/capacity/instance.all | grep us-tulsa-1d | awk '{print$7}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
+export usedmema=`cat /tmp/capacity/instance.all | grep us-EUCA-1a | awk '{print$7}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
+export usedmemb=`cat /tmp/capacity/instance.all | grep us-EUCA-1b | awk '{print$7}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
+export usedmemc=`cat /tmp/capacity/instance.all | grep us-EUCA-1c | awk '{print$7}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
+export usedmemd=`cat /tmp/capacity/instance.all | grep us-EUCA-1d | awk '{print$7}' | while read a; do let y=$a+${y:-0}; echo $y;done | tail -1`
 
 export totalmema=`cat /tmp/capacity/mem.a`
 export totalmemb=`cat /tmp/capacity/mem.b`
@@ -57,15 +57,15 @@ export physicalcored=`cat /tmp/capacity/hardware.d`
 
 
 
-echo "CORES AND MEMORY DETAILS" >> $DATE-Capacity-Tulsa.csv
+echo "CORES AND MEMORY DETAILS" >> $DATE-Capacity-EUCA.csv
 
-echo "ZONES,PHYSICAL_CORES,TOTAL_CORES,USED_CORES,FREE_CORES,TOTAL_MEM,USED_MEM,FREE_MEM"  >> $DATE-Capacity-Tulsa.csv
-echo "Zone-A,$physicalcorea,$totalcorea,$usedcorea,$freecorea,$totalmema,$usedmema,$freemema" >> $DATE-Capacity-Tulsa.csv
-echo "Zone-B,$physicalcoreb,$totalcoreb,$usedcoreb,$freecoreb,$totalmemb,$usedmemb,$freememb" >> $DATE-Capacity-Tulsa.csv
-echo "Zone-C,$physicalcorec,$totalcorec,$usedcorec,$freecorec,$totalmemc,$usedmemc,$freememc" >> $DATE-Capacity-Tulsa.csv
-echo "Zone-D,$physicalcored,$totalcored,$usedcored,$freecored,$totalmemd,$usedmemd,$freememd" >> $DATE-Capacity-Tulsa.csv
-
-
+echo "ZONES,PHYSICAL_CORES,TOTAL_CORES,USED_CORES,FREE_CORES,TOTAL_MEM,USED_MEM,FREE_MEM"  >> $DATE-Capacity-EUCA.csv
+echo "Zone-A,$physicalcorea,$totalcorea,$usedcorea,$freecorea,$totalmema,$usedmema,$freemema" >> $DATE-Capacity-EUCA.csv
+echo "Zone-B,$physicalcoreb,$totalcoreb,$usedcoreb,$freecoreb,$totalmemb,$usedmemb,$freememb" >> $DATE-Capacity-EUCA.csv
+echo "Zone-C,$physicalcorec,$totalcorec,$usedcorec,$freecorec,$totalmemc,$usedmemc,$freememc" >> $DATE-Capacity-EUCA.csv
+echo "Zone-D,$physicalcored,$totalcored,$usedcored,$freecored,$totalmemd,$usedmemd,$freememd" >> $DATE-Capacity-EUCA.csv
 
 
-echo "Please the attachement of Capacity  Report in Tulsa for $DATE "| mailx -s " Capacity Report-Tulsa " -a  $DATE-Capacity-Tulsa.csv  -r sudharsan.punniyakotti@hpe.com -c sharad.p@hpe.com  euca_cloud_admins@hpe.com
+
+
+echo "Please the attachement of Capacity  Report in EUCA for $DATE "| mailx -s " Capacity Report-EUCA " -a  $DATE-Capacity-EUCA.csv  -r sudharsanpunniyakotti@gmail.com sudharsanpunniyakotti@gmail.com
